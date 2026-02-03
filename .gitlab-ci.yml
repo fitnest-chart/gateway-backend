@@ -18,8 +18,6 @@ before_script:
 build:
   stage: build
   image: eclipse-temurin:17-jdk
-  tags:
-    - deployment          # Runner tag
   variables:
     GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
   script:
@@ -38,8 +36,6 @@ build:
 docker-build:
   stage: docker
   image: docker:24.0.5
-  tags:
-    - deployment          # Runner tag
   services:
     - docker:24.0.5-dind
   variables:
@@ -65,8 +61,6 @@ docker-build:
 update-helm-chart:
   stage: update-helm-chart
   image: alpine:3.19
-  tags:
-    - deployment
   variables:
     GIT_STRATEGY: none
   before_script:
