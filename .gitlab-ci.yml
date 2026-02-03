@@ -66,20 +66,21 @@ update-helm-chart:
   stage: update-helm-chart
   image: alpine:3.19
   tags:
-    - deployment          # Runner tag
+    - deployment
   variables:
     GIT_STRATEGY: none
   before_script:
     - apk add --no-cache git yq openssh-client coreutils
   script:
-    # Load IMAGE_TAG from docker-build artifact
     - source ../docker-build/image.env
     - echo "Updating Helm chart with image tag $IMAGE_TAG"
-    - git config --global user.email ci@gitlab.com
+    - git config --global user.email "ci@gitlab.com"
     - git config --global user.name "GitLab CI"
-    - '[ -z "$CHART_REPO_SSH_PRIVATE_KEY_B64" ] && echo "missing CHART_REPO_SSH_PRIVATE_KEY_B64" && exit 1'
-    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
-    - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts && chmod 644 ~/.ssh/known_hosts
+    - if [ -z "$CHART_REPO_SSH_PRIVATE_KEY_B64" ]; then echo "missing CHART_REPO_SSH_PRIVATE_KEY_B64"; exit 1; fi
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
     - eval "$(ssh-agent -s)"
     - echo "$CHART_REPO_SSH_PRIVATE_KEY_B64" | base64 -d | tr -d '\r' | ssh-add -
     - git clone "$HELM_REPO_URL"
