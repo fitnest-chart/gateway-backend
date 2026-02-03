@@ -139,6 +139,70 @@ spring:
                   firstBackoff: 50ms
                   maxBackoff: 500ms
 
+        # OpenAPI doc proxy routes for each service
+        - id: iam-service-openapi
+          uri: lb://iam-service
+          predicates:
+            - Path=/v3/api-docs/iam-service
+          filters:
+            - SetPath=/v3/api-docs
+
+        - id: user-service-openapi
+          uri: lb://user-service
+          predicates:
+            - Path=/v3/api-docs/user-service
+          filters:
+            - SetPath=/v3/api-docs
+
+        - id: catalog-service-openapi
+          uri: lb://catalog-service
+          predicates:
+            - Path=/v3/api-docs/catalog-service
+          filters:
+            - SetPath=/v3/api-docs
+
+        - id: commerce-service-openapi
+          uri: lb://commerce-service
+          predicates:
+            - Path=/v3/api-docs/commerce-service
+          filters:
+            - SetPath=/v3/api-docs
+
+        - id: fitmarket-service-openapi
+          uri: lb://fitmarket-service
+          predicates:
+            - Path=/v3/api-docs/fitmarket-service
+          filters:
+            - SetPath=/v3/api-docs
+
+        - id: notifications-service-openapi
+          uri: lb://notifications-service
+          predicates:
+            - Path=/v3/api-docs/notifications-service
+          filters:
+            - SetPath=/v3/api-docs
+
+        - id: payment-service-openapi
+          uri: lb://payment-service
+          predicates:
+            - Path=/v3/api-docs/payment-service
+          filters:
+            - SetPath=/v3/api-docs
+
+        - id: subscriptions-service-openapi
+          uri: lb://subscriptions-service
+          predicates:
+            - Path=/v3/api-docs/subscriptions-service
+          filters:
+            - SetPath=/v3/api-docs
+
+        - id: support-service-openapi
+          uri: lb://support-service
+          predicates:
+            - Path=/v3/api-docs/support-service
+          filters:
+            - SetPath=/v3/api-docs
+
 eureka:
   client:
     service-url:
@@ -274,3 +338,26 @@ management:
   tracing:
     sampling:
       probability: 1.0
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - url: /v3/api-docs/iam-service
+        name: iam-service
+      - url: /v3/api-docs/user-service
+        name: user-service
+      - url: /v3/api-docs/catalog-service
+        name: catalog-service
+      - url: /v3/api-docs/commerce-service
+        name: commerce-service
+      - url: /v3/api-docs/fitmarket-service
+        name: fitmarket-service
+      - url: /v3/api-docs/notifications-service
+        name: notifications-service
+      - url: /v3/api-docs/payment-service
+        name: payment-service
+      - url: /v3/api-docs/subscriptions-service
+        name: subscriptions-service
+      - url: /v3/api-docs/support-service
+        name: support-service

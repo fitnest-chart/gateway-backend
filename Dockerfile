@@ -1,9 +1,29 @@
+## -----------------------------
+## Stage 1: Build the Java JAR
+## -----------------------------
+FROM gradle:8.5-jdk17-alpine AS builder
 
+WORKDIR /app
+
+# Copy Gradle project files
+COPY build.gradle settings.gradle ./
+COPY gradle ./gradle
+
+# Copy source code
+COPY src ./src
+
+# Build the JAR
+RUN gradle clean build -x test --no-daemon
+
+## -----------------------------
+## Stage 2: Package minimal image
+## -----------------------------
 FROM gcr.io/distroless/java17-debian12@sha256:fd925ba431f3a6c1f1c8114ce1999ca38803220baf0fdf25a4c71b38db8af67f
 
 WORKDIR /app
 
-COPY api-gateway.jar app.jar
+# Copy the JAR from builder
+COPY --from=builder /app/build/libs/api-gateway.jar app.jar
 
 EXPOSE 8080
 
