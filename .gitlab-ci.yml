@@ -81,4 +81,3 @@ update-helm-chart:
     - if: '$CI_COMMIT_BRANCH == "production"'
   dependencies:
     - docker-build
-
