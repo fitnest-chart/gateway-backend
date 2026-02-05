@@ -9,7 +9,7 @@ public class SecurityHeaders {
 
     public static void addSecurityHeaders(ServerHttpResponse response) {
         response.getHeaders().add("X-Content-Type-Options", "nosniff");
-        response.getHeaders().add("X-Frame-Options", "DENY");
+        response.getHeaders().add("X-Frame-Options", "SAMEORIGIN");
         response.getHeaders().add("X-XSS-Protection", "1; mode=block");
         response.getHeaders().add("Referrer-Policy", "strict-origin-when-cross-origin");
         response.getHeaders().add("Permissions-Policy", "geolocation=(), microphone=(), camera()");
@@ -20,7 +20,7 @@ public class SecurityHeaders {
                 "img-src 'self' data: http: https:; " +
                 "font-src 'self' http: https: ws: wss:; " +
                 "connect-src 'self' http: https: ws: wss:; " +
-                "frame-ancestors 'none';");
+                "frame-ancestors 'self';");
         response.getHeaders().add("Server", "");
     }
 }

@@ -107,7 +107,7 @@ management:
 
 springdoc:
   swagger-ui:
-    path: /swagger-ui.html
+    path: /swagger-ui/index.html
     urls:
       - url: /v3/api-docs/iam-service
         name: iam-service
