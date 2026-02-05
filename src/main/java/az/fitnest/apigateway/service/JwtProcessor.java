@@ -19,6 +19,8 @@ public class JwtProcessor {
     @Value("${JWT_SECRET:my-hardcoded-secret-key-for-testing-purposes}")
     private String secretKey;
 
+    private final ReactiveRedisTemplate<String, String> redisTemplate;
+
     private Key signingKey;
 
     public JwtProcessor(ReactiveRedisTemplate<String, String> redisTemplate) {
