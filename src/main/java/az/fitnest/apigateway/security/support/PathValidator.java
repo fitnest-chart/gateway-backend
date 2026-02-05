@@ -20,7 +20,8 @@ public class PathValidator {
     }
 
     public static boolean requiresAuth(String path) {
-        return path.startsWith("/api/v1/admin/") ||
+        return path.startsWith("/api/v1/me/") ||
+               path.startsWith("/api/v1/internal/") ||
                path.startsWith("/api/v1/media/upload") ||
                path.startsWith("/api/v1/media/delete") ||
                path.startsWith("/api/v1/media/move") ||
@@ -29,8 +30,7 @@ public class PathValidator {
     }
 
     public static boolean isAdminRoute(String path) {
-        return path.startsWith("/api/v1/admin/") &&
-               !path.equals("/api/v1/admin/create-admin");
+        return false;
     }
 
     public static boolean startsWithApiV1(String path) {

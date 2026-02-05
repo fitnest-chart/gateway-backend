@@ -21,10 +21,6 @@ public class RateLimitConfig {
         limits.put("auth.send-reset-password-link.post", 2);
         limits.put("auth.reset-password.post", 5);
 
-        // Admin and checkout limits
-        limits.put("admin.write", 30);
-        limits.put("checkout.write", 10);
-
         // Generic limits
         limits.put("general.write", 60);
         limits.put("general.read", 300);
@@ -34,20 +30,13 @@ public class RateLimitConfig {
         return limits.getOrDefault(key, 300);
     }
 
-    public boolean isCheckoutEndpoint(String path) {
-        return path.contains("/checkout") ||
-               path.contains("/payments") ||
-               path.contains("/orders") ||
-               path.contains("/subscriptions");
-    }
-
     public String getReadCategory(String path) {
-        if (path.contains("/gyms") || path.contains("/catalog") || path.contains("/trainers")) {
-            return "CATALOG_GET";
-        } else if (path.contains("/search") || path.contains("/filter")) {
-            return "SEARCH_GET";
-        } else if (path.startsWith("/api/v1/auth/") || path.startsWith("/api/v1/admin/")) {
+        if (path.startsWith("/api/v1/auth/")) {
             return "AUTH_GET";
+        } else if (path.startsWith("/api/v1/me/")) {
+            return "ME_GET";
+        } else if (path.startsWith("/api/v1/media/")) {
+            return "MEDIA_GET";
         } else {
             return "GENERAL_GET";
         }
@@ -57,7 +46,7 @@ public class RateLimitConfig {
         boolean isRead = "GET".equals(method);
         boolean isWrite = Arrays.asList("POST", "PUT", "DELETE", "PATCH").contains(method);
 
-        // IAM auth flows – mirror ms-lotosia logic, adapted to Fitnest endpoints
+        // Auth logic
         if (path.startsWith("/api/v1/auth/login") && isWrite) {
             return "auth.login.post";
         } else if (path.startsWith("/api/v1/auth/otp/send") && isWrite) {
@@ -71,12 +60,7 @@ public class RateLimitConfig {
             return "auth.reset-password.post";
         }
 
-        // Admin & checkout
-        if (path.startsWith("/api/v1/admin/") && isWrite) {
-            return "admin.write";
-        } else if (isCheckoutEndpoint(path) && isWrite) {
-            return "checkout.write";
-        } else if (isWrite) {
+        if (isWrite) {
             return "general.write";
         } else if (isRead) {
             return "general.read";

@@ -65,10 +65,6 @@ public class RateLimiter {
             return path;
         }
 
-        if (path.startsWith("/api/v1/admin/")) {
-            return path.replaceAll("/\\d+", "/*");
-        }
-
         return path
                 .replaceAll("/\\d+", "/*")
                 .replaceAll("/[a-f0-9]{24}", "/*");
