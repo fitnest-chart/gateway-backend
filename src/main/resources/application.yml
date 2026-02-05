@@ -6,16 +6,16 @@ spring:
     name: api-gateway
   data:
     redis:
-      host: redis
-      port: 6379
-      timeout: 2000ms
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
+      timeout: ${REDIS_TIMEOUT:2000ms}
   cloud:
     gateway:
       routes:
         - id: iam-service
           uri: lb://iam-service
           predicates:
-            - Path=/api/v1/auth/**,/api/v1/admin/**
+            - Path=/api/v1/auth/**,/api/v1/admin/**,/api/v1/users/**,/api/v1/profiles/**
           filters:
             - StripPrefix=0
             - RequestRateLimiter=redisRateLimiter
@@ -27,10 +27,10 @@ spring:
                   firstBackoff: 50ms
                   maxBackoff: 500ms
 
-        - id: user-service
-          uri: lb://user-service
+        - id: media-service
+          uri: lb://media-service
           predicates:
-            - Path=/api/v1/users/**,/api/v1/profiles/**
+            - Path=/api/v1/media/**
           filters:
             - StripPrefix=0
             - name: Retry
@@ -41,105 +41,7 @@ spring:
                   firstBackoff: 50ms
                   maxBackoff: 500ms
 
-        - id: catalog-service
-          uri: lb://catalog-service
-          predicates:
-            - Path=/api/v1/gyms/**,/api/v1/trainers/**,/api/v1/categories/**
-          filters:
-            - StripPrefix=0
-            - name: Retry
-              args:
-                retries: 3
-                methods: GET,POST,PUT,DELETE
-                backoff:
-                  firstBackoff: 50ms
-                  maxBackoff: 500ms
-
-        - id: commerce-service
-          uri: lb://commerce-service
-          predicates:
-            - Path=/api/v1/orders/**
-          filters:
-            - StripPrefix=0
-            - name: Retry
-              args:
-                retries: 3
-                methods: GET,POST,PUT,DELETE
-                backoff:
-                  firstBackoff: 50ms
-                  maxBackoff: 500ms
-
-        - id: fitmarket-service
-          uri: lb://fitmarket-service
-          predicates:
-            - Path=/api/v1/stores/**,/api/v1/market/**
-          filters:
-            - StripPrefix=0
-            - name: Retry
-              args:
-                retries: 3
-                methods: GET,POST,PUT,DELETE
-                backoff:
-                  firstBackoff: 50ms
-                  maxBackoff: 500ms
-
-        - id: notifications-service
-          uri: lb://notifications-service
-          predicates:
-            - Path=/api/v1/notifications/**
-          filters:
-            - StripPrefix=0
-            - name: Retry
-              args:
-                retries: 3
-                methods: GET,POST,PUT,DELETE
-                backoff:
-                  firstBackoff: 50ms
-                  maxBackoff: 500ms
-
-        - id: payment-service
-          uri: lb://payment-service
-          predicates:
-            - Path=/api/v1/payments/**,/api/v1/cards/**
-          filters:
-            - StripPrefix=0
-            - name: Retry
-              args:
-                retries: 3
-                methods: GET,POST,PUT,DELETE
-                backoff:
-                  firstBackoff: 50ms
-                  maxBackoff: 500ms
-
-        - id: subscriptions-service
-          uri: lb://subscriptions-service
-          predicates:
-            - Path=/api/v1/subscriptions/**
-          filters:
-            - StripPrefix=0
-            - name: Retry
-              args:
-                retries: 3
-                methods: GET,POST,PUT,DELETE
-                backoff:
-                  firstBackoff: 50ms
-                  maxBackoff: 500ms
-
-        - id: support-service
-          uri: lb://support-service
-          predicates:
-            - Path=/api/v1/support/**,/api/v1/tickets/**
-          filters:
-            - StripPrefix=0
-            - name: Retry
-              args:
-                retries: 3
-                methods: GET,POST,PUT,DELETE
-                backoff:
-                  firstBackoff: 50ms
-                  maxBackoff: 500ms
-
-        # OpenAPI doc proxy routes for each service
+        # OpenAPI doc proxy routes
         - id: iam-service-openapi
           uri: lb://iam-service
           predicates:
@@ -147,59 +49,10 @@ spring:
           filters:
             - SetPath=/v3/api-docs
 
-        - id: user-service-openapi
-          uri: lb://user-service
+        - id: media-service-openapi
+          uri: lb://media-service
           predicates:
-            - Path=/v3/api-docs/user-service
-          filters:
-            - SetPath=/v3/api-docs
-
-        - id: catalog-service-openapi
-          uri: lb://catalog-service
-          predicates:
-            - Path=/v3/api-docs/catalog-service
-          filters:
-            - SetPath=/v3/api-docs
-
-        - id: commerce-service-openapi
-          uri: lb://commerce-service
-          predicates:
-            - Path=/v3/api-docs/commerce-service
-          filters:
-            - SetPath=/v3/api-docs
-
-        - id: fitmarket-service-openapi
-          uri: lb://fitmarket-service
-          predicates:
-            - Path=/v3/api-docs/fitmarket-service
-          filters:
-            - SetPath=/v3/api-docs
-
-        - id: notifications-service-openapi
-          uri: lb://notifications-service
-          predicates:
-            - Path=/v3/api-docs/notifications-service
-          filters:
-            - SetPath=/v3/api-docs
-
-        - id: payment-service-openapi
-          uri: lb://payment-service
-          predicates:
-            - Path=/v3/api-docs/payment-service
-          filters:
-            - SetPath=/v3/api-docs
-
-        - id: subscriptions-service-openapi
-          uri: lb://subscriptions-service
-          predicates:
-            - Path=/v3/api-docs/subscriptions-service
-          filters:
-            - SetPath=/v3/api-docs
-
-        - id: support-service-openapi
-          uri: lb://support-service
-          predicates:
-            - Path=/v3/api-docs/support-service
+            - Path=/v3/api-docs/media-service
           filters:
             - SetPath=/v3/api-docs
 
@@ -220,70 +73,7 @@ resilience4j:
         waitDurationInOpenState: 10s
         failureRateThreshold: 50
         eventConsumerBufferSize: 10
-      user-service:
-        registerHealthIndicator: true
-        slidingWindowSize: 10
-        minimumNumberOfCalls: 5
-        permittedNumberOfCallsInHalfOpenState: 3
-        automaticTransitionFromOpenToHalfOpenEnabled: true
-        waitDurationInOpenState: 10s
-        failureRateThreshold: 50
-        eventConsumerBufferSize: 10
-      catalog-service:
-        registerHealthIndicator: true
-        slidingWindowSize: 10
-        minimumNumberOfCalls: 5
-        permittedNumberOfCallsInHalfOpenState: 3
-        automaticTransitionFromOpenToHalfOpenEnabled: true
-        waitDurationInOpenState: 10s
-        failureRateThreshold: 50
-        eventConsumerBufferSize: 10
-      commerce-service:
-        registerHealthIndicator: true
-        slidingWindowSize: 10
-        minimumNumberOfCalls: 5
-        permittedNumberOfCallsInHalfOpenState: 3
-        automaticTransitionFromOpenToHalfOpenEnabled: true
-        waitDurationInOpenState: 10s
-        failureRateThreshold: 50
-        eventConsumerBufferSize: 10
-      fitmarket-service:
-        registerHealthIndicator: true
-        slidingWindowSize: 10
-        minimumNumberOfCalls: 5
-        permittedNumberOfCallsInHalfOpenState: 3
-        automaticTransitionFromOpenToHalfOpenEnabled: true
-        waitDurationInOpenState: 10s
-        failureRateThreshold: 50
-        eventConsumerBufferSize: 10
-      notifications-service:
-        registerHealthIndicator: true
-        slidingWindowSize: 10
-        minimumNumberOfCalls: 5
-        permittedNumberOfCallsInHalfOpenState: 3
-        automaticTransitionFromOpenToHalfOpenEnabled: true
-        waitDurationInOpenState: 10s
-        failureRateThreshold: 50
-        eventConsumerBufferSize: 10
-      payment-service:
-        registerHealthIndicator: true
-        slidingWindowSize: 10
-        minimumNumberOfCalls: 5
-        permittedNumberOfCallsInHalfOpenState: 3
-        automaticTransitionFromOpenToHalfOpenEnabled: true
-        waitDurationInOpenState: 10s
-        failureRateThreshold: 50
-        eventConsumerBufferSize: 10
-      subscriptions-service:
-        registerHealthIndicator: true
-        slidingWindowSize: 10
-        minimumNumberOfCalls: 5
-        permittedNumberOfCallsInHalfOpenState: 3
-        automaticTransitionFromOpenToHalfOpenEnabled: true
-        waitDurationInOpenState: 10s
-        failureRateThreshold: 50
-        eventConsumerBufferSize: 10
-      support-service:
+      media-service:
         registerHealthIndicator: true
         slidingWindowSize: 10
         minimumNumberOfCalls: 5
@@ -297,28 +87,7 @@ resilience4j:
       iam-service:
         timeoutDuration: 5s
         cancelRunningFuture: true
-      user-service:
-        timeoutDuration: 5s
-        cancelRunningFuture: true
-      catalog-service:
-        timeoutDuration: 5s
-        cancelRunningFuture: true
-      commerce-service:
-        timeoutDuration: 5s
-        cancelRunningFuture: true
-      fitmarket-service:
-        timeoutDuration: 5s
-        cancelRunningFuture: true
-      notifications-service:
-        timeoutDuration: 5s
-        cancelRunningFuture: true
-      payment-service:
-        timeoutDuration: 5s
-        cancelRunningFuture: true
-      subscriptions-service:
-        timeoutDuration: 5s
-        cancelRunningFuture: true
-      support-service:
+      media-service:
         timeoutDuration: 5s
         cancelRunningFuture: true
 
@@ -345,19 +114,5 @@ springdoc:
     urls:
       - url: /v3/api-docs/iam-service
         name: iam-service
-      - url: /v3/api-docs/user-service
-        name: user-service
-      - url: /v3/api-docs/catalog-service
-        name: catalog-service
-      - url: /v3/api-docs/commerce-service
-        name: commerce-service
-      - url: /v3/api-docs/fitmarket-service
-        name: fitmarket-service
-      - url: /v3/api-docs/notifications-service
-        name: notifications-service
-      - url: /v3/api-docs/payment-service
-        name: payment-service
-      - url: /v3/api-docs/subscriptions-service
-        name: subscriptions-service
-      - url: /v3/api-docs/support-service
-        name: support-service
+      - url: /v3/api-docs/media-service
+        name: media-service

@@ -3,6 +3,8 @@ package az.fitnest.apigateway.service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -14,13 +16,18 @@ import java.util.UUID;
 @Component
 public class JwtProcessor {
 
-    private final ReactiveRedisTemplate<String, String> redisTemplate;
+    @Value("${JWT_SECRET:my-hardcoded-secret-key-for-testing-purposes}")
+    private String secretKey;
 
-    private static final String SECRET_KEY = "my-hardcoded-secret-key-for-testing-purposes";
-    private static final Key SIGNING_KEY = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    private Key signingKey;
 
     public JwtProcessor(ReactiveRedisTemplate<String, String> redisTemplate) {
         this.redisTemplate = redisTemplate;
+    }
+
+    @PostConstruct
+    public void init() {
+        this.signingKey = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
     public String generateJti() {
@@ -42,7 +49,7 @@ public class JwtProcessor {
 
         try {
             Claims claims = Jwts.parserBuilder()
-                    .setSigningKey(SIGNING_KEY)
+                    .setSigningKey(signingKey)
                     .build()
                     .parseClaimsJws(token)
                     .getBody();

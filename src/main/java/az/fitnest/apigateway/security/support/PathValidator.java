@@ -21,6 +21,9 @@ public class PathValidator {
 
     public static boolean requiresAuth(String path) {
         return path.startsWith("/api/v1/admin/") ||
+               path.startsWith("/api/v1/media/upload") ||
+               path.startsWith("/api/v1/media/delete") ||
+               path.startsWith("/api/v1/media/move") ||
                AUTH_REQUIRED_PATHS.contains(path) ||
                requiresAuthForContent(path);
     }
