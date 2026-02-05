@@ -13,7 +13,7 @@ spring:
     gateway:
       routes:
         - id: iam-service
-          uri: lb://iam-service
+          uri: http://iam-service:8080
           predicates:
             - Path=/api/v1/auth/**,/api/v1/admin/**,/api/v1/users/**,/api/v1/profiles/**
           filters:
@@ -28,7 +28,7 @@ spring:
                   maxBackoff: 500ms
 
         - id: media-service
-          uri: lb://media-service
+          uri: http://media-service:8086
           predicates:
             - Path=/api/v1/media/**
           filters:
@@ -43,23 +43,20 @@ spring:
 
         # OpenAPI doc proxy routes
         - id: iam-service-openapi
-          uri: lb://iam-service
+          uri: http://iam-service:8080
           predicates:
             - Path=/v3/api-docs/iam-service
           filters:
             - SetPath=/v3/api-docs
 
         - id: media-service-openapi
-          uri: lb://media-service
+          uri: http://media-service:8086
           predicates:
             - Path=/v3/api-docs/media-service
           filters:
             - SetPath=/v3/api-docs
 
-eureka:
-  client:
-    service-url:
-      defaultZone: ${EUREKA_URL:http://service-discovery:8761/eureka/}
+# Removed Eureka configuration as it conflicts with Kubernetes/Istio DNS
 
 resilience4j:
   circuitbreaker:
