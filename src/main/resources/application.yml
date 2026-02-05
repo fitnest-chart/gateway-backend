@@ -6,7 +6,7 @@ spring:
     name: api-gateway
   data:
     redis:
-      host: ${REDIS_HOST:redis}
+      host: ${REDIS_HOST:redis.fitnest-dev.svc.cluster.local}
       port: ${REDIS_PORT:6379}
       timeout: ${REDIS_TIMEOUT:2000ms}
   cloud:
