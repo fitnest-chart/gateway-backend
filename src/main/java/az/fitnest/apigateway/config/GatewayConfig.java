@@ -1,5 +1,6 @@
 package az.fitnest.apigateway.config;
 
+import az.fitnest.apigateway.web.support.RequestUtils;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +12,7 @@ public class GatewayConfig {
 
     @Bean
     public KeyResolver keyResolver() {
-        return exchange -> Mono.just(exchange.getRequest().getRemoteAddress().getAddress().getHostAddress());
+        return exchange -> Mono.just(RequestUtils.extractClientIP(exchange.getRequest()));
     }
 
     @Bean
