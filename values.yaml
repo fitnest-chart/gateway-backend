@@ -47,7 +47,130 @@ istio:
     create: true
     hosts:
       - "*"
+    corsPolicy:
+      allowOrigins:
+        - exact: "*"
+      allowMethods:
+        - POST
+        - GET
+        - OPTIONS
+        - PUT
+        - DELETE
+      allowHeaders:
+        - authorization
+        - content-type
+        - keep-alive
+        - user-agent
+        - cache-control
+        - content-transfer-encoding
+        - x-accept-content-transfer-encoding
+        - x-accept-response-streaming
+        - x-user-agent
+        - x-grpc-web
+      maxAge: 100s
     http:
+      # Service API Docs Routes
+      - match:
+          - uri:
+              prefix: /v3/api-docs/iam-service
+        rewrite:
+          uri: /v3/api-docs
+        route:
+          - destination:
+              host: iam-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /v3/api-docs/media-service
+        rewrite:
+          uri: /v3/api-docs
+        route:
+          - destination:
+              host: media-service
+              port:
+                number: 8086
+      - match:
+          - uri:
+              prefix: /v3/api-docs/catalog-service
+        rewrite:
+          uri: /v3/api-docs
+        route:
+          - destination:
+              host: catalog-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /v3/api-docs/commerce-service
+        rewrite:
+          uri: /v3/api-docs
+        route:
+          - destination:
+              host: commerce-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /v3/api-docs/fitmarket-service
+        rewrite:
+          uri: /v3/api-docs
+        route:
+          - destination:
+              host: fitmarket-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /v3/api-docs/notifications-service
+        rewrite:
+          uri: /v3/api-docs
+        route:
+          - destination:
+              host: notifications-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /v3/api-docs/payment-service
+        rewrite:
+          uri: /v3/api-docs
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /v3/api-docs/subscription-service
+        rewrite:
+          uri: /v3/api-docs
+        route:
+          - destination:
+              host: subscription-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /v3/api-docs/support-service
+        rewrite:
+          uri: /v3/api-docs
+        route:
+          - destination:
+              host: support-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /v3/api-docs/user-service
+        rewrite:
+          uri: /v3/api-docs
+        route:
+          - destination:
+              host: user-service
+              port:
+                number: 8080
+      # General Gateway Routes
       - match:
           - uri:
               prefix: /api/v1/
