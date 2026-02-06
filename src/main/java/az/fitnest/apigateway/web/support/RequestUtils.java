@@ -19,8 +19,10 @@ public class RequestUtils {
             return xRealIP;
         }
 
-        return request.getRemoteAddress() != null ?
-               request.getRemoteAddress().getAddress().getHostAddress() : "unknown";
+        if (request.getRemoteAddress() != null && request.getRemoteAddress().getAddress() != null) {
+            return request.getRemoteAddress().getAddress().getHostAddress();
+        }
+        return "unknown";
     }
 
     public static String extractToken(ServerWebExchange exchange) {
