@@ -1,5 +1,6 @@
 server:
   port: 8080
+  forward-headers-strategy: framework
 
 spring:
   application:
@@ -19,7 +20,6 @@ spring:
           filters:
             - StripPrefix=0
             - RequestRateLimiter=redisRateLimiter
-            - XForwardedHeaders
             - name: Retry
               args:
                 retries: 3
@@ -88,3 +88,29 @@ resilience4j:
       media-service:
         timeoutDuration: 30s
         cancelRunningFuture: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway,prometheus,metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  tracing:
+    sampling:
+      probability: 1.0
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui/index.html
+    urls:
+      - url: /v3/api-docs/iam-service
+        name: iam-service
+      - url: /v3/api-docs/media-service
+        name: media-service
