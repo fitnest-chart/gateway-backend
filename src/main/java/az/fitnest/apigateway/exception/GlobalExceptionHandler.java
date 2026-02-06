@@ -9,14 +9,21 @@ import org.springframework.web.reactive.function.client.WebClientRequestExceptio
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.server.ServerWebInputException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.net.ConnectException;
+import java.net.UnknownHostException;
 import java.util.concurrent.TimeoutException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleGenericException(Exception ex) {
+        logger.error("Unexpected error in API Gateway: ", ex);
         return ErrorResponseBuilder.internalServerError("An unexpected error occurred in the API Gateway");
     }
 
@@ -33,6 +40,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ConnectException.class)
     public ResponseEntity<ApiError> handleConnectException(ConnectException ex) {
         return ErrorResponseBuilder.serviceUnavailable("The requested service is currently unavailable. Please try again later.");
+    }
+
+    @ExceptionHandler(UnknownHostException.class)
+    public ResponseEntity<ApiError> handleUnknownHostException(UnknownHostException ex) {
+        return ErrorResponseBuilder.serviceUnavailable("Failed to resolve the requested service. It may be down or unaccessible.");
     }
 
     @ExceptionHandler(TimeoutException.class)

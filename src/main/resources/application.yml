@@ -57,6 +57,11 @@ spring:
           filters:
             - SetPath=/v3/api-docs
 
+        - id: media-service-swagger-assets
+          uri: http://media-service:8086
+          predicates:
+            - Path=/swagger/**
+
 # Removed Eureka configuration as it conflicts with Kubernetes/Istio DNS
 
 resilience4j:

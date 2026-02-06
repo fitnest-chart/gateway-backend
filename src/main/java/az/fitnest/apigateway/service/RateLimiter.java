@@ -56,7 +56,7 @@ public class RateLimiter {
 
         return redisTemplate.execute(RATE_LIMIT_SCRIPT, Collections.singletonList(key),
                 Arrays.asList(String.valueOf(limit), String.valueOf(window)))
-                .single()
+                .next()
                 .defaultIfEmpty(0L);
     }
 

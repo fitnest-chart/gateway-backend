@@ -32,6 +32,12 @@ public class AuthFilterConfig {
     public GlobalFilter authFilter() {
         return (exchange, chain) -> {
             String path = exchange.getRequest().getPath().value();
+
+            // Bypass auth and rate limiting for OpenAPI docs and Swagger UI
+            if (path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui") || path.startsWith("/swagger")) {
+                return chain.filter(exchange);
+            }
+
             String method = exchange.getRequest().getMethod().name();
             String clientIP = RequestUtils.extractClientIP(exchange.getRequest());
 
