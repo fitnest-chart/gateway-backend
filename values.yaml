@@ -25,20 +25,13 @@ resources:
     memory: 512Mi
 
 env:
-  - name: JWT_SECRET
-    value: your-jwt-secret-key-change-in-production-min-256-bits
-  - name: JWT_ISSUER
-    value: fitnest
-  - name: REDIS_HOST
-    value: redis
-  - name: REDIS_PORT
-    value: "6379"
-  - name: REDIS_TIMEOUT
-    value: 2000ms
-  - name: IAM_SERVICE_URL
-    value: http://iam-service:8080
-  - name: MEDIA_SERVICE_URL
-    value: http://media-service:8086
+  JWT_SECRET: "your-jwt-secret-key-change-in-production-min-256-bits"
+  JWT_ISSUER: "fitnest"
+  REDIS_HOST: "redis"
+  REDIS_PORT: "6379"
+  REDIS_TIMEOUT: "2000ms"
+  IAM_SERVICE_URL: "http://iam-service:8080"
+  MEDIA_SERVICE_URL: "http://media-service:8086"
 
 istio:
   enabled: true
@@ -48,7 +41,8 @@ istio:
     name: public-gateway
     host: "*"
     port: 80
-    selector: ingressgateway
+    selector:
+      istio: ingressgateway
   virtualService:
     create: true
     hosts:
