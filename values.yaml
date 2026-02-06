@@ -70,3 +70,18 @@ istio:
               host: api-gateway
               port:
                 number: 80
+
+destinationRule:
+  connectionPool:
+    http:
+      http1MaxPendingRequests: 100
+      http2MaxRequests: 1000
+    tcp:
+      maxConnections: 100
+  loadBalancer:
+    simple: ROUND_ROBIN
+  outlierDetection:
+    consecutive5xxErrors: 5
+    interval: 30s
+    baseEjectionTime: 30s
+    maxEjectionPercent: 50
