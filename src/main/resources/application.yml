@@ -14,7 +14,7 @@ spring:
     gateway:
       routes:
         - id: iam-service
-          uri: http://iam-service:8080
+          uri: http://fitnest-iam-service-dev:8080
           predicates:
             - Path=/api/v1/auth/**,/api/v1/admin/**,/api/v1/users/**,/api/v1/profiles/**
           filters:
@@ -29,7 +29,7 @@ spring:
                   maxBackoff: 500ms
 
         - id: media-service
-          uri: http://media-service:8086
+          uri: http://fitnest-media-service-dev:8086
           predicates:
             - Path=/api/v1/media/**
           filters:
@@ -44,21 +44,21 @@ spring:
 
         # OpenAPI doc proxy routes
         - id: iam-service-openapi
-          uri: http://iam-service:8080
+          uri: http://fitnest-iam-service-dev:8080
           predicates:
             - Path=/v3/api-docs/iam-service
           filters:
             - SetPath=/v3/api-docs
 
         - id: media-service-openapi
-          uri: http://media-service:8086
+          uri: http://fitnest-media-service-dev:8086
           predicates:
             - Path=/v3/api-docs/media-service
           filters:
             - SetPath=/v3/api-docs
 
         - id: media-service-swagger-assets
-          uri: http://media-service:8086
+          uri: http://fitnest-media-service-dev:8086
           predicates:
             - Path=/swagger/**
 
@@ -116,6 +116,6 @@ springdoc:
     path: /swagger-ui/index.html
     urls:
       - url: /v3/api-docs/iam-service
-        name: iam-service
+        name: fitnest-iam-service-dev
       - url: /v3/api-docs/media-service
-        name: media-service
+        name: fitnest-media-service-dev
