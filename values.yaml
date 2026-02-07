@@ -21,8 +21,8 @@ resources:
     cpu: 250m
     memory: 512Mi
 env:
-  JWT_SECRET: "your-jwt-secret-key-change-in-production-min-256-bits"
-  JWT_ISSUER: "fitnest"
+  JWT_SECRET: "your-jwt-secret-change-in-production"
+  JWT_ISSUER: "iam-service"
   REDIS_HOST: "redis"
   REDIS_PORT: "6379"
   REDIS_TIMEOUT: "2000ms"
