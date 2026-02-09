@@ -62,6 +62,11 @@ istio:
         - x-accept-response-streaming
         - x-user-agent
         - x-grpc-web
+        - x-internal-token
+        - x-user-id
+        - x-user-email
+        - x-user-roles
+        - x-request-id
       maxAge: 100s
     http:
       # Service API Docs Routes
