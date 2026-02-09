@@ -14,6 +14,7 @@ spec:
       labels:
         {{- include "api-gateway.selectorLabels" . | nindent 8 }}
     spec:
+      serviceAccountName: {{ include "api-gateway.fullname" . }}
       {{- with .Values.image.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
