@@ -5,7 +5,7 @@
 replicaCount: 1
 image:
   repository: ghcr.io/fitnest-backend/api-gateway
-  tag: "development-0ff96f3"
+  tag: "development-fe479a5"
   pullPolicy: IfNotPresent
   imagePullSecrets:
     - name: ghcr-secret
@@ -21,7 +21,6 @@ resources:
     cpu: 250m
     memory: 512Mi
   memory: 512Mi
-
 livenessProbe:
   httpGet:
     path: /actuator/health
@@ -34,7 +33,6 @@ readinessProbe:
     port: 8080
   initialDelaySeconds: 30
   periodSeconds: 10
-
 env:
   JWT_SECRET: "your-jwt-secret-change-in-production"
   JWT_ISSUER: "fitnest"
