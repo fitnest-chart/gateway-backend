@@ -20,27 +20,17 @@ resources:
   limits:
     cpu: 500m
     memory: 512Mi
-livenessProbe:
-  httpGet:
-    path: /actuator/health
-    port: 8080
-  initialDelaySeconds: 45
-  periodSeconds: 15
-readinessProbe:
-  httpGet:
-    path: /actuator/health
-    port: 8080
-  initialDelaySeconds: 30
-  periodSeconds: 10
+
 env:
   JWT_SECRET: "your-jwt-secret-change-in-production"
   JWT_ISSUER: "fitnest"
   SPRING_PROFILES_ACTIVE: "dev"
-  SPRING_REDIS_HOST: "redis.fitnest-dev.svc.cluster.local"
+  SPRING_REDIS_HOST: "redis"
   SPRING_REDIS_PORT: "6379"
   SPRING_REDIS_TIMEOUT: "2000ms"
   IDENTITY_SERVICE_URL: "http://identity-service:8080"
   MEDIA_SERVICE_URL: "http://media-service:8086"
+  JAVA_OPTS: "-XX:TieredStopAtLevel=1 -Xss256k -Xmx448m"
 istio:
   enabled: true
   pathPrefix: ""
