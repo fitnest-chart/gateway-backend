@@ -12,13 +12,20 @@ service:
   type: ClusterIP
   port: 80
   targetPort: 8080
+hpa:
+  enabled: false
+  minReplicas: "1"
+  maxReplicas: "3"
+  cpuUtilization: "90"
+  memoryUtilization: "450Mi"
 resources:
-  requests:
-    cpu: 250m
-    memory: 256Mi
+  enabled: true
   limits:
-    cpu: 500m
     memory: 512Mi
+    cpu: 0.5
+  requests:
+    cpu: 0.25
+    memory: 256Mi
 env:
   JWT_SECRET: "your-jwt-secret-change-in-production"
   JWT_ISSUER: "fitnest"
