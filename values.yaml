@@ -19,7 +19,6 @@ hpa:
   cpuUtilization: "90"
   memoryUtilization: "450Mi"
 resources:
-  enabled: true
   limits:
     memory: 512Mi
     cpu: 500m
