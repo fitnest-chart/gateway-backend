@@ -177,7 +177,32 @@ istio:
               host: user-service
               port:
                 number: 8080
-      # General Gateway Routes
+      # Specific marketplace store routes (must come before general /api/v1/ catch-all)
+      - match:
+          - uri:
+              prefix: /api/v1/stores/admin
+        route:
+          - destination:
+              host: marketplace-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/stores/
+        route:
+          - destination:
+              host: marketplace-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/stores
+        route:
+          - destination:
+              host: marketplace-service
+              port:
+                number: 8080
+      # General Gateway Routes (catch-all for api gateway paths)
       - match:
           - uri:
               prefix: /api/v1/
@@ -194,30 +219,6 @@ istio:
               host: api-gateway
               port:
                 number: 80
-      - match:
-          - uri:
-              prefix: /api/v1/stores
-        route:
-          - destination:
-              host: marketplace-service
-              port:
-                number: 8080
-      - match:
-          - uri:
-              prefix: /api/v1/stores/
-        route:
-          - destination:
-              host: marketplace-service
-              port:
-                number: 8080
-      - match:
-          - uri:
-              prefix: /api/v1/stores/admin
-        route:
-          - destination:
-              host: marketplace-service
-              port:
-                number: 8080
 destinationRule:
   connectionPool:
     http:
