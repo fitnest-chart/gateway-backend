@@ -194,6 +194,30 @@ istio:
               host: api-gateway
               port:
                 number: 80
+      - match:
+          - uri:
+              prefix: /api/v1/stores
+        route:
+          - destination:
+              host: marketplace-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/stores/
+        route:
+          - destination:
+              host: marketplace-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/stores/admin
+        route:
+          - destination:
+              host: marketplace-service
+              port:
+                number: 8080
 destinationRule:
   connectionPool:
     http:
