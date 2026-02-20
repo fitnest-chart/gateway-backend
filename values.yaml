@@ -32,8 +32,8 @@ env:
   SPRING_REDIS_HOST: "redis"
   SPRING_REDIS_PORT: "6379"
   SPRING_REDIS_TIMEOUT: "2000ms"
-  IDENTITY_SERVICE_URL: "http://identity-service:9090"
-  STORAGE_SERVICE_URL: "http://storage-service:9090"
+  IDENTITY_SERVICE_URL: "http://identity-service:8080"
+  STORAGE_SERVICE_URL: "http://storage-service:8080"
   JAVA_OPTS: "-XX:TieredStopAtLevel=1 -Xss256k -Xmx448m"
 istio:
   enabled: true
@@ -86,7 +86,7 @@ istio:
           - destination:
               host: identity-service
               port:
-                number: 9090
+                number: 8080
       - match:
           - uri:
               prefix: /v3/api-docs/storage-service
@@ -96,7 +96,7 @@ istio:
           - destination:
               host: storage-service
               port:
-                number: 9090
+                number: 8080
       - match:
           - uri:
               prefix: /v3/api-docs/catalog-service
@@ -106,7 +106,7 @@ istio:
           - destination:
               host: catalog-service
               port:
-                number: 9090
+                number: 8080
       - match:
           - uri:
               prefix: /v3/api-docs/commerce-service
@@ -116,7 +116,7 @@ istio:
           - destination:
               host: commerce-service
               port:
-                number: 9090
+                number: 8080
       - match:
           - uri:
               prefix: /v3/api-docs/marketplace-service
@@ -126,7 +126,7 @@ istio:
           - destination:
               host: marketplace-service
               port:
-                number: 9090
+                number: 8080
       - match:
           - uri:
               prefix: /v3/api-docs/notifications-service
@@ -136,7 +136,7 @@ istio:
           - destination:
               host: notifications-service
               port:
-                number: 9090
+                number: 8080
       - match:
           - uri:
               prefix: /v3/api-docs/payment-service
@@ -146,7 +146,7 @@ istio:
           - destination:
               host: payment-service
               port:
-                number: 9090
+                number: 8080
       - match:
           - uri:
               prefix: /v3/api-docs/subscription-service
@@ -156,7 +156,7 @@ istio:
           - destination:
               host: subscription-service
               port:
-                number: 9090
+                number: 8080
       - match:
           - uri:
               prefix: /v3/api-docs/support-service
@@ -166,7 +166,7 @@ istio:
           - destination:
               host: support-service
               port:
-                number: 9090
+                number: 8080
       - match:
           - uri:
               prefix: /v3/api-docs/user-service
@@ -176,7 +176,7 @@ istio:
           - destination:
               host: user-service
               port:
-                number: 9090
+                number: 8080
       # Specific marketplace store routes (must come before general /api/v1/ catch-all)
       - match:
           - uri:
@@ -185,7 +185,7 @@ istio:
           - destination:
               host: marketplace-service
               port:
-                number: 9090
+                number: 8080
       - match:
           - uri:
               prefix: /api/v1/stores/
@@ -193,7 +193,7 @@ istio:
           - destination:
               host: marketplace-service
               port:
-                number: 9090
+                number: 8080
       - match:
           - uri:
               prefix: /api/v1/stores
@@ -201,7 +201,7 @@ istio:
           - destination:
               host: marketplace-service
               port:
-                number: 9090
+                number: 8080
       # General Gateway Routes (catch-all for api gateway paths)
       - match:
           - uri:
