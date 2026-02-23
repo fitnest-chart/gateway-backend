@@ -119,12 +119,12 @@ istio:
                 number: 8080
       - match:
           - uri:
-              prefix: /v3/api-docs/marketplace-service
+              prefix: /v3/api-docs/catalog-service
         rewrite:
           uri: /v3/api-docs
         route:
           - destination:
-              host: marketplace-service
+              host: catalog-service
               port:
                 number: 8080
       - match:
@@ -177,13 +177,13 @@ istio:
               host: user-service
               port:
                 number: 8080
-      # Specific marketplace store routes (must come before general /api/v1/ catch-all)
+      # Specific catalog store routes (must come before general /api/v1/ catch-all)
       - match:
           - uri:
               prefix: /api/v1/stores/admin
         route:
           - destination:
-              host: marketplace-service
+              host: catalog-service
               port:
                 number: 8080
       - match:
@@ -191,7 +191,7 @@ istio:
               prefix: /api/v1/stores/
         route:
           - destination:
-              host: marketplace-service
+              host: catalog-service
               port:
                 number: 8080
       - match:
@@ -199,7 +199,7 @@ istio:
               prefix: /api/v1/stores
         route:
           - destination:
-              host: marketplace-service
+              host: catalog-service
               port:
                 number: 8080
       # General Gateway Routes (catch-all for api gateway paths)
