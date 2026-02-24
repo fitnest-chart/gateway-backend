@@ -26,6 +26,7 @@ resources:
     cpu: 250m
     memory: 256Mi
 env:
+  SPRINGDOC_SERVER_URL: "https://dev-api.fitnest.az"
   JWT_SECRET: "your-jwt-secret-change-in-production"
   JWT_ISSUER: "fitnest"
   SPRING_PROFILES_ACTIVE: "dev"
@@ -41,14 +42,14 @@ istio:
   gateway:
     create: true
     name: public-gateway
-    host: "*"
+    host: "dev-api.fitnest.az"
     port: 80
     selector:
       istio: ingressgateway
   virtualService:
     create: true
     hosts:
-      - "*"
+      - "dev-api.fitnest.az"
     corsPolicy:
       allowOrigins:
         - exact: "*"
