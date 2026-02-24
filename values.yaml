@@ -46,6 +46,9 @@ istio:
     port: 80
     selector:
       istio: ingressgateway
+    tls:
+      enabled: true
+      credentialName: "fitnest-wildcard-tls"
   virtualService:
     create: true
     hosts:

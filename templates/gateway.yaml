@@ -10,9 +10,22 @@ spec:
     {{- toYaml .Values.istio.gateway.selector | nindent 4 }}
   servers:
     - hosts:
-        - "*"
+        - {{ .Values.istio.gateway.host | default "*" | quote }}
       port:
         name: http
         number: 80
         protocol: HTTP
+      {{- if and .Values.istio.gateway.tls .Values.istio.gateway.tls.enabled }}
+      tls:
+        httpsRedirect: true
+    - hosts:
+        - {{ .Values.istio.gateway.host | default "*" | quote }}
+      port:
+        name: https
+        number: 443
+        protocol: HTTPS
+      tls:
+        mode: SIMPLE
+        credentialName: {{ .Values.istio.gateway.tls.credentialName | quote }}
+      {{- end }}
 {{- end }}
