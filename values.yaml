@@ -206,6 +206,23 @@ istio:
               host: catalog-service
               port:
                 number: 8080
+      # Super Admin Routes
+      - match:
+          - uri:
+              prefix: /api/v1/super-admin/users
+        route:
+          - destination:
+              host: identity-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/super-admin
+        route:
+          - destination:
+              host: catalog-service
+              port:
+                number: 8080
       # General Gateway Routes (catch-all for api gateway paths)
       - match:
           - uri:
