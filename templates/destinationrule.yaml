@@ -1,24 +1,24 @@
-{{- if .Values.istio.enabled }}
+{ { - if .Values.istio.enabled } }
 apiVersion: networking.istio.io/v1
 kind: DestinationRule
 metadata:
-  name: {{ include "api-gateway.fullname" . }}
+  name: { { include "api-gateway.fullname" . } }
   labels:
-    {{- include "api-gateway.labels" . | nindent 4 }}
+    { { - include "api-gateway.labels" . | nindent 4 } }
 spec:
-  host: {{ include "api-gateway.fullname" . }}
+  host: { { include "api-gateway.fullname" . } }
   trafficPolicy:
     connectionPool:
       http:
-        http1MaxPendingRequests: {{ .Values.destinationRule.connectionPool.http.http1MaxPendingRequests }}
-        http2MaxRequests: {{ .Values.destinationRule.connectionPool.http.http2MaxRequests }}
+        http1MaxPendingRequests: { { .Values.destinationRule.connectionPool.http.http1MaxPendingRequests } }
+        http2MaxRequests: { { .Values.destinationRule.connectionPool.http.http2MaxRequests } }
       tcp:
-        maxConnections: {{ .Values.destinationRule.connectionPool.tcp.maxConnections }}
+        maxConnections: { { .Values.destinationRule.connectionPool.tcp.maxConnections } }
     loadBalancer:
-      simple: {{ .Values.destinationRule.loadBalancer.simple }}
+      simple: { { .Values.destinationRule.loadBalancer.simple } }
     outlierDetection:
-      consecutive5xxErrors: {{ .Values.destinationRule.outlierDetection.consecutive5xxErrors }}
-      interval: {{ .Values.destinationRule.outlierDetection.interval }}
-      baseEjectionTime: {{ .Values.destinationRule.outlierDetection.baseEjectionTime }}
-      maxEjectionPercent: {{ .Values.destinationRule.outlierDetection.maxEjectionPercent }}
-{{- end }}
+      consecutive5xxErrors: { { .Values.destinationRule.outlierDetection.consecutive5xxErrors } }
+      interval: { { .Values.destinationRule.outlierDetection.interval } }
+      baseEjectionTime: { { .Values.destinationRule.outlierDetection.baseEjectionTime } }
+      maxEjectionPercent: { { .Values.destinationRule.outlierDetection.maxEjectionPercent } }
+  { { - end } }
