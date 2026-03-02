@@ -35,7 +35,7 @@ env:
   SPRING_REDIS_TIMEOUT: "2000ms"
   IDENTITY_SERVICE_URL: "http://identity-service:8080"
   STORAGE_SERVICE_URL: "http://storage-service:8080"
-  JAVA_OPTS: "-Xmx384m -Xms192m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -Xss256k"
+  JAVA_OPTS: "-Xmx384m -Xms192m -XX:+UseZGC -XX:+ZGenerational -Xss256k"
 istio:
   enabled: true
   pathPrefix: ""
