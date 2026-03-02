@@ -1,50 +1,50 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "api-gateway.fullname" . }}
+  name: {{ include "api-gateway.fullname" .}}
   labels:
-    {{- include "api-gateway.labels" . | nindent 4 }}
+    {{- include "api-gateway.labels" . | nindent 4}}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.replicaCount}}
   selector:
     matchLabels:
-      {{- include "api-gateway.selectorLabels" . | nindent 6 }}
+      {{- include "api-gateway.selectorLabels" . | nindent 6}}
   template:
     metadata:
       labels:
-        {{- include "api-gateway.selectorLabels" . | nindent 8 }}
+        {{- include "api-gateway.selectorLabels" . | nindent 8}}
       annotations:
-        {{- if .Values.istio.enabled }}
+        {{- if .Values.istio.enabled}}
         sidecar.istio.io/inject: "true"
-        {{- end }}
+        {{- end}}
     spec:
       serviceAccountName: api-gateway-sa
-      {{- with .Values.image.imagePullSecrets }}
+      {{- with .Values.image.imagePullSecrets}}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- toYaml . | nindent 8}}
+      {{- end}}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ .Chart.Name}}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.image.pullPolicy}}
           ports:
             - name: http
-              containerPort: {{ .Values.service.targetPort | default .Values.service.port }}
+              containerPort: {{ .Values.service.targetPort | default .Values.service.port}}
               protocol: TCP
-          {{- if .Values.env }}
+          {{- if .Values.env}}
           env:
-          {{- range $key, $value := .Values.env }}
-          - name: {{ $key }}
-            value: {{ $value | quote }}
-          {{- end }}
-          {{- end }}
-          {{- if .Values.livenessProbe }}
+          {{- range $key, $value := .Values.env}}
+          - name: {{ $key}}
+            value: {{ $value | quote}}
+          {{- end}}
+          {{- end}}
+          {{- if .Values.livenessProbe}}
           livenessProbe:
-            {{- toYaml .Values.livenessProbe | nindent 10 }}
-          {{- end }}
-          {{- if .Values.readinessProbe }}
+            {{- toYaml .Values.livenessProbe | nindent 10}}
+          {{- end}}
+          {{- if .Values.readinessProbe}}
           readinessProbe:
-            {{- toYaml .Values.readinessProbe | nindent 10 }}
-          {{- end }}
+            {{- toYaml .Values.readinessProbe | nindent 10}}
+          {{- end}}
           resources:
-            {{- toYaml .Values.resources | nindent 10 }}
+            {{- toYaml .Values.resources | nindent 10}}
