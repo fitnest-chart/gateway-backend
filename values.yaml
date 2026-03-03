@@ -24,7 +24,7 @@ resources:
     cpu: 500m
   requests:
     cpu: 250m
-    memory: 256Mi
+    memory: 380Mi
 env:
   SPRINGDOC_SERVER_URL: "https://dev-api.fitnest.az"
   JWT_SECRET: "your-jwt-secret-change-in-production"
@@ -35,7 +35,7 @@ env:
   SPRING_DATA_REDIS_TIMEOUT: "2000ms"
   IDENTITY_SERVICE_URL: "http://identity-service:8080"
   STORAGE_SERVICE_URL: "http://storage-service:8080"
-  JAVA_OPTS: "-Xmx384m -Xms192m -XX:+UseZGC -Xss256k"
+  JAVA_OPTS: "-Xmx256m -Xms160m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled -XX:MaxMetaspaceSize=96m -Xss512k -XX:+ExitOnOutOfMemoryError"
 istio:
   enabled: true
   pathPrefix: ""
