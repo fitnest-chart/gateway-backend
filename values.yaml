@@ -223,6 +223,34 @@ istio:
               host: catalog-service
               port:
                 number: 8080
+      # Support Service Routes (must come before general /api/v1/ catch-all)
+      # FAQ routes (public - no auth required)
+      - match:
+          - uri:
+              prefix: /api/v1/faqs
+        route:
+          - destination:
+              host: support-service
+              port:
+                number: 8080
+      # Support ticket routes (authenticated users via JWT)
+      - match:
+          - uri:
+              prefix: /api/v1/tickets
+        route:
+          - destination:
+              host: support-service
+              port:
+                number: 8080
+      # Support admin routes (ADMIN role enforced by support-service)
+      - match:
+          - uri:
+              prefix: /api/v1/admin/support
+        route:
+          - destination:
+              host: support-service
+              port:
+                number: 8080
       # General Gateway Routes (catch-all for api gateway paths)
       - match:
           - uri:
