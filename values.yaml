@@ -244,6 +244,14 @@ istio:
                 number: 8080
       - match:
           - uri:
+              prefix: /epoint/
+        route:
+          - destination:
+              host: api-gateway
+              port:
+                number: 80
+      - match:
+          - uri:
               prefix: /api/v1/
           - uri:
               prefix: /swagger-ui
