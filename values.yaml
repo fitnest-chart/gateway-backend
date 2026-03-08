@@ -38,7 +38,7 @@ env:
     -XX:+UseG1GC
     -XX:MaxGCPauseMillis=200
     -XX:+ParallelRefProcEnabled
-    -XX:MaxMetaspaceSize=128m
+    -XX:MaxMetaspaceSize=256m
     -XX:+AlwaysPreTouch
     -Xss512k
     -XX:+ExitOnOutOfMemoryError
