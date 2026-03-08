@@ -17,11 +17,11 @@ hpa:
   memoryUtilization: "450Mi"
 resources:
   limits:
-    memory: 512Mi
-    cpu: 500m
+    memory: 1Gi
+    cpu: 1000m
   requests:
-    cpu: 100m
-    memory: 256Mi
+    cpu: 500m
+    memory: 512Mi
 env:
   SPRINGDOC_SERVER_URL: "https://dev-api.fitnest.az"
   JWT_SECRET: "your-jwt-secret-change-in-production"
