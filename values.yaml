@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: ghcr.io/fitnest-backend/api-gateway
-  tag: "development-3df74d8"
+  tag: "development-e7c2a81"
   pullPolicy: IfNotPresent
   imagePullSecrets:
     - name: ghcr-secret
@@ -33,15 +33,8 @@ env:
   IDENTITY_SERVICE_URL: "http://identity-service:8080"
   STORAGE_SERVICE_URL: "http://storage-service:8080"
   JAVA_TOOL_OPTIONS: >
-    -Xms256m
-    -Xmx768m
-    -XX:+UseG1GC
-    -XX:MaxGCPauseMillis=200
-    -XX:+ParallelRefProcEnabled
-    -XX:MaxMetaspaceSize=256m
-    -XX:+AlwaysPreTouch
-    -Xss512k
-    -XX:+ExitOnOutOfMemoryError
+    -Xms256m -Xmx768m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled -XX:MaxMetaspaceSize=256m -XX:+AlwaysPreTouch -Xss512k -XX:+ExitOnOutOfMemoryError
+
 istio:
   enabled: true
   pathPrefix: ""
