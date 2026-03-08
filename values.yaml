@@ -18,9 +18,9 @@ hpa:
 resources:
   limits:
     memory: 1Gi
-    cpu: 1000m
+    cpu: 250m
   requests:
-    cpu: 500m
+    cpu: 100m
     memory: 512Mi
 env:
   SPRINGDOC_SERVER_URL: "https://dev-api.fitnest.az"
