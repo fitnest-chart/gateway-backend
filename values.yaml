@@ -1,4 +1,4 @@
-replicaCount: 1
+replicaCount: 2
 image:
   repository: ghcr.io/fitnest-backend/api-gateway
   tag: "development-3df74d8"
@@ -17,11 +17,11 @@ hpa:
   memoryUtilization: "450Mi"
 resources:
   requests:
-    cpu: 100m
-    memory: 300Mi
+    cpu: 250m
+    memory: 512Mi
   limits:
-    cpu: 300m
-    memory: 600Mi
+    cpu: 1200m
+    memory: 1Gi
 env:
   SPRINGDOC_SERVER_URL: "https://dev-api.fitnest.az"
   JWT_SECRET: "your-jwt-secret-change-in-production"
@@ -32,7 +32,16 @@ env:
   SPRING_DATA_REDIS_TIMEOUT: "2000ms"
   IDENTITY_SERVICE_URL: "http://identity-service:8080"
   STORAGE_SERVICE_URL: "http://storage-service:8080"
-  JAVA_TOOL_OPTIONS: "-Xms256m -Xmx400m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled -XX:MaxMetaspaceSize=128m -Xss512k -XX:+ExitOnOutOfMemoryError"
+  JAVA_TOOL_OPTIONS: >
+    -Xms256m
+    -Xmx512m
+    -XX:+UseG1GC
+    -XX:MaxGCPauseMillis=200
+    -XX:+ParallelRefProcEnabled
+    -XX:MaxMetaspaceSize=160m
+    -XX:+AlwaysPreTouch
+    -Xss512k
+    -XX:+ExitOnOutOfMemoryError
 istio:
   enabled: true
   pathPrefix: ""
