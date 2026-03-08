@@ -1,4 +1,3 @@
-
 replicaCount: 1
 image:
   repository: ghcr.io/fitnest-backend/api-gateway
@@ -21,8 +20,8 @@ resources:
     memory: 512Mi
     cpu: 500m
   requests:
-    cpu: 250m
-    memory: 380Mi
+    cpu: 100m
+    memory: 256Mi
 env:
   SPRINGDOC_SERVER_URL: "https://dev-api.fitnest.az"
   JWT_SECRET: "your-jwt-secret-change-in-production"
