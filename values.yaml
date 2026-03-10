@@ -284,3 +284,13 @@ destinationRule:
     interval: 30s
     baseEjectionTime: 30s
     maxEjectionPercent: 50
+redis:
+  host: redis
+  port: 6379
+  timeout: 2s
+  lettuce:
+    pool:
+      max-active: 100
+      max-idle: 20
+      min-idle: 5
+      max-wait: 2s
