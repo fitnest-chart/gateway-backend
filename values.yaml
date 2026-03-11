@@ -270,6 +270,48 @@ istio:
               host: api-gateway
               port:
                 number: 80
+      - match:
+          - uri:
+              prefix: /api/v1/payments
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/user-cards
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/heartbeat
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /epoint/
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /v3/api-docs/payment-service
+        rewrite:
+          uri: /v3/api-docs
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
 destinationRule:
   connectionPool:
     http:
