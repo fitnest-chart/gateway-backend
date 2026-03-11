@@ -312,6 +312,14 @@ istio:
               host: payment-service
               port:
                 number: 8080
+      - match:
+          - uri:
+              prefix: /payment/card/save-init
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
 destinationRule:
   connectionPool:
     http:
