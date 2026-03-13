@@ -38,13 +38,6 @@ spec:
             value: {{ $value | quote}}
           {{- end}}
           {{- end}}
-          {{- if .Values.livenessProbe}}
-          livenessProbe:
-{{ toYaml .Values.livenessProbe | nindent 12}}
-          {{- end}}
-          {{- if .Values.readinessProbe}}
-          readinessProbe:
-{{ toYaml .Values.readinessProbe | nindent 12}}
-          {{- end}}
+
           resources:
 {{ toYaml .Values.resources | nindent 12}}
