@@ -44,7 +44,10 @@ istio:
   gateway:
     create: true
     name: public-gateway
-    host: "dev-api.fitnest.az"
+    hosts:
+      - "dev-api.fitnest.az"
+      - "fitnest.az"
+
     port: 80
     selector:
       istio: ingressgateway
