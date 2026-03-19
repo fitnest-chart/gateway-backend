@@ -18,10 +18,10 @@ hpa:
 resources:
   requests:
     cpu: 400m
-    memory: 768Mi
+     memory: 512Mi
   limits:
     cpu: 1000m
-    memory: 1536Mi
+     memory: 1024Mi
 env:
   SPRINGDOC_SERVER_URL: "https://dev-api.fitnest.az"
   JWT_SECRET: "your-jwt-secret-change-in-production"
@@ -36,7 +36,7 @@ env:
   USE_GRPC_STORAGE: "false"
   STORAGE_GRPC_ADDRESS: "dns:///storage-service.fitnest-dev.svc.cluster.local:9090"
   JAVA_TOOL_OPTIONS: >
-    -Xms256m -Xmx768m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled -XX:MaxMetaspaceSize=256m -XX:+AlwaysPreTouch -Xss512k -XX:+ExitOnOutOfMemoryError
+    -Xms256m -Xmx512m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled -XX:MaxMetaspaceSize=256m -XX:+AlwaysPreTouch -Xss512k -XX:+ExitOnOutOfMemoryError
 
 istio:
   enabled: true
