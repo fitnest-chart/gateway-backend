@@ -226,7 +226,9 @@ istio:
                 number: 8080
       - match:
           - uri:
-              prefix: /api/v1/faqs
+              exact: /api/v1/faqs
+          - uri:
+              regex: ^/api/v1/faqs/\\d+$
         route:
           - destination:
               host: support-service
@@ -234,7 +236,9 @@ istio:
                 number: 8080
       - match:
           - uri:
-              prefix: /api/v1/tickets
+              exact: /api/v1/tickets
+          - uri:
+              regex: ^/api/v1/tickets/\\d+$
         route:
           - destination:
               host: support-service
@@ -348,7 +352,9 @@ istio:
                 number: 8080
       - match:
           - uri:
-              prefix: /api/v1/faq-categories
+              exact: /api/v1/faq-categories
+          - uri:
+              regex: ^/api/v1/faq-categories/\\d+$
         route:
           - destination:
               host: support-service
@@ -356,7 +362,9 @@ istio:
                 number: 8080
       - match:
           - uri:
-              prefix: /api/v1/admin/faqs
+              exact: /api/v1/admin/faqs
+          - uri:
+              regex: ^/api/v1/admin/faqs/\\d+$
         route:
           - destination:
               host: support-service
@@ -364,7 +372,9 @@ istio:
                 number: 8080
       - match:
           - uri:
-              prefix: /api/v1/admin/faq-categories
+              exact: /api/v1/admin/faq-categories
+          - uri:
+              regex: ^/api/v1/admin/faq-categories/\\d+$
         route:
           - destination:
               host: support-service
