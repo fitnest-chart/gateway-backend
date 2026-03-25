@@ -346,6 +346,30 @@ istio:
               host: payment-service
               port:
                 number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/faq-categories
+        route:
+          - destination:
+              host: support-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/admin/faqs
+        route:
+          - destination:
+              host: support-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/admin/faq-categories
+        route:
+          - destination:
+              host: support-service
+              port:
+                number: 8080
 destinationRule:
   connectionPool:
     http:
