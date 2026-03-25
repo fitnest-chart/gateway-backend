@@ -362,6 +362,14 @@ istio:
                 number: 8080
       - match:
           - uri:
+              exact: /api/v1/support/contactDetails
+        route:
+          - destination:
+              host: support-service
+              port:
+                number: 8080
+      - match:
+          - uri:
               exact: /api/v1/admin/faqs
           - uri:
               regex: ^/api/v1/admin/faqs/\\d+$
