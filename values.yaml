@@ -474,6 +474,182 @@ istio:
               port:
                 number: 8080
       # Payment-service endpoints removed; now handled only in application.yml
+      - match:
+          - uri:
+              prefix: /api/v1/payments
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/payments/history
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/wallets
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/me/cards
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/me/cards/default
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              regex: ^/api/v1/me/cards/[^/]+$
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/me/payments
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/me/payments/history
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/admin/payments
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              regex: ^/api/v1/admin/payments/[^/]+$
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              regex: ^/api/v1/admin/payments/order/[^/]+$
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              regex: ^/api/v1/admin/payments/transaction/[^/]+$
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/admin/idempotency
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /epoint
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /payment
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /payment/result
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /payment/callback
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /payment/epoint/callback
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /payment/payment/init
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              regex: ^/payment/payment/status/[^/]+$
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /payment/card/save-init
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /payment/payment/with-card
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
 destinationRule:
   connectionPool:
     http:
