@@ -457,25 +457,6 @@ istio:
                 number: 80
       - match:
           - uri:
-              prefix: /api/v1/
-          - uri:
-              prefix: /swagger-ui
-          - uri:
-              prefix: /v3/api-docs
-          - uri:
-              prefix: /webjars
-          - uri:
-              exact: /swagger-ui.html
-          - uri:
-              exact: /api/v1/bmi/calculate
-        route:
-          - destination:
-              host: user-service
-              port:
-                number: 8080
-      # Payment-service endpoints removed; now handled only in application.yml
-      - match:
-          - uri:
               prefix: /api/v1/payments
         route:
           - destination:
