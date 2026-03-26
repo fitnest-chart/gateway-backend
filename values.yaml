@@ -280,7 +280,7 @@ istio:
                 number: 8080
       - match:
           - uri:
-              prefix: /api/v1/payments
+              exact: /api/v1/payments
         route:
           - destination:
               host: payment-service
@@ -288,7 +288,7 @@ istio:
                 number: 8080
       - match:
           - uri:
-              prefix: /api/v1/user-cards
+              exact: /api/v1/payments/history
         route:
           - destination:
               host: payment-service
@@ -296,7 +296,7 @@ istio:
                 number: 8080
       - match:
           - uri:
-              prefix: /api/heartbeat
+              exact: /api/v1/wallets
         route:
           - destination:
               host: payment-service
@@ -304,10 +304,247 @@ istio:
                 number: 8080
       - match:
           - uri:
-              prefix: /epoint/
+              exact: /api/v1/me/cards
         route:
           - destination:
               host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /api/v1/me/cards/default
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              regex: ^/api/v1/me/cards/[^/]+$
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /api/v1/me/payments
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /api/v1/me/payments/history
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /api/v1/admin/payments
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              regex: ^/api/v1/admin/payments/[^/]+$
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              regex: ^/api/v1/admin/payments/order/[^/]+$
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              regex: ^/api/v1/admin/payments/transaction/[^/]+$
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /api/v1/admin/idempotency
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /api/v1/admin/idempotency/stats
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              regex: ^/api/v1/admin/idempotency/key/[^/]+$
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              regex: ^/api/v1/admin/idempotency/cache/[^/]+$
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /api/v1/admin/idempotency/cache
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /epoint
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /payment
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /payment/result
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /payment/callback
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /payment/epoint/callback
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /payment/payment/init
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              regex: ^/payment/payment/status/[^/]+$
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /payment/card/save-init
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /payment/payment/with-card
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+# ...existing code...
+      - match:
+          - uri:
+              prefix: /v3/api-docs/identity-service
+        rewrite:
+          uri: /v3/api-docs
+        route:
+          - destination:
+              host: identity-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /v3/api-docs/storage-service
+        rewrite:
+          uri: /v3/api-docs
+        route:
+          - destination:
+              host: storage-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /v3/api-docs/catalog-service
+        rewrite:
+          uri: /v3/api-docs
+        route:
+          - destination:
+              host: catalog-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /v3/api-docs/commerce-service
+        rewrite:
+          uri: /v3/api-docs
+        route:
+          - destination:
+              host: commerce-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /v3/api-docs/catalog-service
+        rewrite:
+          uri: /v3/api-docs
+        route:
+          - destination:
+              host: catalog-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /v3/api-docs/notifications-service
+        rewrite:
+          uri: /v3/api-docs
+        route:
+          - destination:
+              host: notifications-service
               port:
                 number: 8080
       - match:
@@ -322,41 +559,19 @@ istio:
                 number: 8080
       - match:
           - uri:
-              prefix: /payment/card/save-init
+              prefix: /v3/api-docs/subscription-service
+        rewrite:
+          uri: /v3/api-docs
         route:
           - destination:
-              host: payment-service
+              host: subscription-service
               port:
                 number: 8080
       - match:
           - uri:
-              prefix: /api/v1/me/payments
-        route:
-          - destination:
-              host: payment-service
-              port:
-                number: 8080
-      - match:
-          - uri:
-              prefix: /api/v1/me/payments/
-        route:
-          - destination:
-              host: payment-service
-              port:
-                number: 8080
-      - match:
-          - uri:
-              prefix: /api/v1/me/payments/history
-        route:
-          - destination:
-              host: payment-service
-              port:
-                number: 8080
-      - match:
-          - uri:
-              exact: /api/v1/faq-categories
-          - uri:
-              regex: ^/api/v1/faq-categories/\\d+$
+              prefix: /v3/api-docs/support-service
+        rewrite:
+          uri: /v3/api-docs
         route:
           - destination:
               host: support-service
@@ -364,7 +579,59 @@ istio:
                 number: 8080
       - match:
           - uri:
-              exact: /api/v1/support/contactDetails
+              prefix: /v3/api-docs/user-service
+        rewrite:
+          uri: /v3/api-docs
+        route:
+          - destination:
+              host: user-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/stores/admin
+        route:
+          - destination:
+              host: catalog-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/stores/
+        route:
+          - destination:
+              host: catalog-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/stores
+        route:
+          - destination:
+              host: catalog-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/super-admin/users
+        route:
+          - destination:
+              host: identity-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /api/v1/super-admin
+        route:
+          - destination:
+              host: catalog-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /api/v1/faqs
+          - uri:
+              regex: ^/api/v1/faqs/\\d+$
         route:
           - destination:
               host: support-service
@@ -372,9 +639,9 @@ istio:
                 number: 8080
       - match:
           - uri:
-              exact: /api/v1/admin/faqs
+              exact: /api/v1/tickets
           - uri:
-              regex: ^/api/v1/admin/faqs/\\d+$
+              regex: ^/api/v1/tickets/\\d+$
         route:
           - destination:
               host: support-service
@@ -382,12 +649,244 @@ istio:
                 number: 8080
       - match:
           - uri:
-              exact: /api/v1/admin/faq-categories
-          - uri:
-              regex: ^/api/v1/admin/faq-categories/\\d+$
+              prefix: /api/v1/admin/support
         route:
           - destination:
               host: support-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              prefix: /epoint/
+        route:
+          - destination:
+              host: api-gateway
+              port:
+                number: 80
+      - match:
+          - uri:
+              prefix: /api/v1/
+          - uri:
+              prefix: /swagger-ui
+          - uri:
+              prefix: /v3/api-docs
+          - uri:
+              prefix: /webjars
+          - uri:
+              exact: /swagger-ui.html
+          - uri:
+              exact: /api/v1/bmi/calculate
+        route:
+          - destination:
+              host: user-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /api/v1/payments
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /api/v1/payments/history
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /api/v1/wallets
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /api/v1/me/cards
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /api/v1/me/cards/default
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              regex: ^/api/v1/me/cards/[^/]+$
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /api/v1/me/payments
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /api/v1/me/payments/history
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /api/v1/admin/payments
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              regex: ^/api/v1/admin/payments/[^/]+$
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              regex: ^/api/v1/admin/payments/order/[^/]+$
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              regex: ^/api/v1/admin/payments/transaction/[^/]+$
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /api/v1/admin/idempotency
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /api/v1/admin/idempotency/stats
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              regex: ^/api/v1/admin/idempotency/key/[^/]+$
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              regex: ^/api/v1/admin/idempotency/cache/[^/]+$
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /api/v1/admin/idempotency/cache
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /epoint
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /payment
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /payment/result
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /payment/callback
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /payment/epoint/callback
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /payment/payment/init
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              regex: ^/payment/payment/status/[^/]+$
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /payment/card/save-init
+        route:
+          - destination:
+              host: payment-service
+              port:
+                number: 8080
+      - match:
+          - uri:
+              exact: /payment/payment/with-card
+        route:
+          - destination:
+              host: payment-service
               port:
                 number: 8080
 destinationRule:
