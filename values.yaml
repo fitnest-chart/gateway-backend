@@ -271,11 +271,13 @@ istio:
               prefix: /webjars
           - uri:
               exact: /swagger-ui.html
+          - uri:
+              exact: /api/v1/bmi/calculate
         route:
           - destination:
-              host: api-gateway
+              host: user-service
               port:
-                number: 80
+                number: 8080
       - match:
           - uri:
               prefix: /api/v1/payments
