@@ -1,22 +1,18 @@
 # values.yaml for gateway-backend
 
 replicaCount: 1
-
 image:
   repository: ghcr.io/fitnest-code/gateway-backend
-  tag: "development-6a10f3f"
+  tag: "development-a3af44c"
   pullPolicy: IfNotPresent
   imagePullSecrets:
     - name: ghcr-secret
-
 service:
   type: ClusterIP
   port: 80
   targetPort: 8080
-
 networkPolicy:
   enabled: true
-
 ingress:
   enabled: true
   className: nginx
@@ -34,16 +30,14 @@ ingress:
       secretName: fitnest-wildcard-tls
   backend:
     service:
-      name: ""   # Empty means use the chart's fullname (gateway-backend)
+      name: "" # Empty means use the chart's fullname (gateway-backend)
       port: 80
-
 hpa:
   enabled: false
   minReplicas: "1"
   maxReplicas: "3"
   cpuUtilization: "90"
   memoryUtilization: "450Mi"
-
 resources:
   requests:
     cpu: 17m
@@ -51,7 +45,6 @@ resources:
   limits:
     cpu: 1000m
     memory: 1024Mi
-
 env:
   SPRINGDOC_SERVER_URL: "https://dev-api.fitnest.az"
   JWT_SECRET: "your-jwt-secret-change-in-production"
