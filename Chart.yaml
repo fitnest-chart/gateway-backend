@@ -1,6 +1,6 @@
 apiVersion: v2
-name: api-gateway
-description: A Helm chart for API Gateway with Istio
+name: gateway-backend
+description: A Helm chart gateway-backend
 type: application
 version: 0.1.0
 appVersion: "1.0.0"
