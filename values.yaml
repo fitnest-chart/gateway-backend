@@ -23,21 +23,32 @@ resources:
     cpu: 1000m
     memory: 1024Mi
 env:
-  SPRINGDOC_SERVER_URL: "https://dev-api.fitnest.az"
-  JWT_SECRET: "your-jwt-secret-change-in-production"
-  JWT_ISSUER: "fitnest"
-  SPRING_PROFILES_ACTIVE: "dev"
-  SPRING_DATA_REDIS_HOST: "redis"
-  SPRING_DATA_REDIS_PORT: "6379"
-  SPRING_DATA_REDIS_TIMEOUT: "2000ms"
-  IDENTITY_SERVICE_URL: "http://identity-service:8080"
-  STORAGE_SERVICE_URL: "http://storage-service:8080"
-  # Optional: enable gRPC-based storage client instead of HTTP. When true, set STORAGE_GRPC_ADDRESS.
-  USE_GRPC_STORAGE: "false"
-  STORAGE_GRPC_ADDRESS: "dns:///storage-service.fitnest-dev.svc.cluster.local:9090"
-  JAVA_TOOL_OPTIONS: >
-    -Xms256m -Xmx512m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled -XX:MaxMetaspaceSize=256m -XX:+AlwaysPreTouch -Xss512k -XX:+ExitOnOutOfMemoryError
-
+  - name: SPRINGDOC_SERVER_URL
+    value: "https://dev-api.fitnest.az"
+  - name: JWT_SECRET
+    value: "your-jwt-secret-change-in-production"
+  - name: JWT_ISSUER
+    value: "fitnest"
+  - name: SPRING_PROFILES_ACTIVE
+    value: "dev"
+  - name: SPRING_DATA_REDIS_HOST
+    value: "10.0.0.4"
+  - name: SPRING_DATA_REDIS_PORT
+    value: "6380"
+  - name: SPRING_DATA_REDIS_PASSWORD
+    value: "ChangeMeDevRedis!"
+  - name: SPRING_DATA_REDIS_TIMEOUT
+    value: "2000ms"
+  - name: IDENTITY_SERVICE_URL
+    value: "http://identity-service:8080"
+  - name: STORAGE_SERVICE_URL
+    value: "http://storage-service:8080"
+  - name: USE_GRPC_STORAGE
+    value: "false"
+  - name: STORAGE_GRPC_ADDRESS
+    value: "dns:///storage-service.fitnest-dev.svc.cluster.local:9090"
+  - name: JAVA_TOOL_OPTIONS
+    value: "-Xms256m -Xmx512m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled -XX:MaxMetaspaceSize=256m -XX:+AlwaysPreTouch -Xss512k -XX:+ExitOnOutOfMemoryError"
 istio:
   enabled: true
   pathPrefix: ""
