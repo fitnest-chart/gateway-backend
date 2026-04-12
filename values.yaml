@@ -1,16 +1,22 @@
+# values.yaml for gateway-backend
+
 replicaCount: 1
+
 image:
-  repository: ghcr.io/fitnest-backend/api-gateway
+  repository: ghcr.io/fitnest-code/gateway-backend
   tag: "development-6a10f3f"
   pullPolicy: IfNotPresent
   imagePullSecrets:
     - name: ghcr-secret
+
 service:
   type: ClusterIP
   port: 80
   targetPort: 8080
+
 networkPolicy:
   enabled: true
+
 ingress:
   enabled: true
   className: nginx
@@ -28,14 +34,16 @@ ingress:
       secretName: fitnest-wildcard-tls
   backend:
     service:
-      name: "" # Empty means use the chart's fullname (api-gateway)
+      name: ""   # Empty means use the chart's fullname (gateway-backend)
       port: 80
+
 hpa:
   enabled: false
   minReplicas: "1"
   maxReplicas: "3"
   cpuUtilization: "90"
   memoryUtilization: "450Mi"
+
 resources:
   requests:
     cpu: 17m
@@ -43,6 +51,7 @@ resources:
   limits:
     cpu: 1000m
     memory: 1024Mi
+
 env:
   SPRINGDOC_SERVER_URL: "https://dev-api.fitnest.az"
   JWT_SECRET: "your-jwt-secret-change-in-production"
@@ -52,9 +61,9 @@ env:
   SPRING_DATA_REDIS_PORT: "6380"
   SPRING_DATA_REDIS_PASSWORD: "ChangeMeDevRedis!"
   SPRING_DATA_REDIS_TIMEOUT: "2000ms"
-  IDENTITY_SERVICE_URL: "http://identity-service:8080"
-  STORAGE_SERVICE_URL: "http://storage-service:8080"
+  IDENTITY_SERVICE_URL: "http://identity-backend:8080"
+  STORAGE_SERVICE_URL: "http://storage-backend:8080"
   USE_GRPC_STORAGE: "false"
-  STORAGE_GRPC_ADDRESS: "dns:///storage-service.fitnest-dev.svc.cluster.local:9090"
+  STORAGE_GRPC_ADDRESS: "dns:///storage-backend.fitnest-dev.svc.cluster.local:9090"
   JAVA_TOOL_OPTIONS: >-
     -Xms256m -Xmx512m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled -XX:MaxMetaspaceSize=256m -XX:+AlwaysPreTouch -Xss512k -XX:+ExitOnOutOfMemoryError
