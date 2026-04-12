@@ -1,0 +1,19 @@
+{{- if .Values.networkPolicy.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "api-gateway.fullname" . }}-ingress
+  labels:
+    {{- include "api-gateway.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "api-gateway.selectorLabels" . | nindent 6 }}
+  policyTypes:
+    - Ingress
+  ingress:
+    # Allow all incoming HTTP traffic (since it's the edge gateway)
+    - ports:
+        - port: {{ .Values.service.targetPort | default .Values.service.port }}
+          protocol: TCP
+  {{- end }}
