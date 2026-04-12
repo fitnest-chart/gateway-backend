@@ -54,8 +54,8 @@ env:
   SPRING_DATA_REDIS_PORT: "6380"
   SPRING_DATA_REDIS_PASSWORD: "ChangeMeDevRedis!"
   SPRING_DATA_REDIS_TIMEOUT: "2000ms"
-  IDENTITY_SERVICE_URL: "http://identity-backend:8080"
-  STORAGE_SERVICE_URL: "http://storage-backend:8080"
+  IDENTITY_BACKEND_URL: "http://identity-backend:8080"
+  STORAGE_BACKEND_URL: "http://storage-backend:8080"
   USE_GRPC_STORAGE: "false"
   STORAGE_GRPC_ADDRESS: "dns:///storage-backend.fitnest-dev.svc.cluster.local:9090"
   JAVA_TOOL_OPTIONS: >-
