@@ -12,7 +12,6 @@ spec:
   policyTypes:
     - Ingress
   ingress:
-    # Allow all incoming HTTP traffic (since it's the edge gateway)
     - ports:
         - port: {{ .Values.service.targetPort | default .Values.service.port }}
           protocol: TCP
