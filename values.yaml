@@ -15,6 +15,26 @@ service:
 networkPolicy:
   enabled: true
 
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+  hosts:
+    - host: dev-api.fitnest.az
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - hosts:
+        - dev-api.fitnest.az
+      secretName: fitnest-wildcard-tls
+  backend:
+    service:
+      name: ""   # Empty means use the chart's fullname (api-gateway)
+      port: 80
+
 hpa:
   enabled: false
   minReplicas: "1"
