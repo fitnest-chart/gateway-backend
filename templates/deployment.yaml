@@ -30,6 +30,8 @@ spec:
           env:
             - name: SPRING_CONFIG_IMPORT
               value: "vault://"
+            - name: SPRING_PROFILES_ACTIVE
+              value: "{{ .Values.vaultEnv | default "development" }}"
             - name: SPRING_CLOUD_VAULT_ENABLED
               value: "true"
             - name: SPRING_CLOUD_VAULT_URI
@@ -52,11 +54,5 @@ spec:
               value: "{{ .Chart.Name }}"
             - name: SPRING_CLOUD_VAULT_KV_PROFILE_SEPARATOR
               value: "/"
-            {{- if .Values.env }}
-            {{- range $key, $value := .Values.env }}
-            - name: {{ $key }}
-              value: {{ $value | quote }}
-            {{- end }}
-            {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
