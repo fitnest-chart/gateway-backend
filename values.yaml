@@ -1,62 +1,47 @@
-vaultEnv: development
-# values.yaml for gateway-backend
-
-replicaCount: 1
+hpa:
+  cpuUtilization: '90'
+  enabled: false
+  maxReplicas: '3'
+  memoryUtilization: 450Mi
+  minReplicas: '1'
 image:
-  repository: ghcr.io/fitnest-code/gateway-backend
-  tag: "development-05715ca"
-  pullPolicy: IfNotPresent
   imagePullSecrets:
-    - name: ghcr-secret
-service:
-  type: ClusterIP
-  port: 80
-  targetPort: 8080
-networkPolicy:
-  enabled: true
+  - name: ghcr-secret
+  pullPolicy: IfNotPresent
+  repository: ghcr.io/fitnest-code/gateway-backend
+  tag: development-05715ca
 ingress:
-  enabled: true
-  className: nginx
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-  hosts:
-    - host: dev-api.fitnest.az
-      paths:
-        - path: /
-          pathType: Prefix
-  tls:
-    - hosts:
-        - dev-api.fitnest.az
-      secretName: fitnest-wildcard-tls
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
   backend:
     service:
-      name: "" # Empty means use the chart's fullname (gateway-backend)
+      name: ''
       port: 80
-hpa:
-  enabled: false
-  minReplicas: "1"
-  maxReplicas: "3"
-  cpuUtilization: "90"
-  memoryUtilization: "450Mi"
+  className: nginx
+  enabled: true
+  hosts:
+  - host: dev-api.fitnest.az
+    paths:
+    - path: /
+      pathType: Prefix
+  tls:
+  - hosts:
+    - dev-api.fitnest.az
+    secretName: fitnest-wildcard-tls
+networkPolicy:
+  enabled: true
+replicaCount: 1
 resources:
-  requests:
-    cpu: 17m
-    memory: 512Mi
   limits:
     cpu: 1000m
     memory: 1024Mi
-env:
-  SPRINGDOC_SERVER_URL: "https://dev-api.fitnest.az"
-  JWT_ISSUER: "fitnest"
-  SPRING_PROFILES_ACTIVE: "dev"
-  SPRING_DATA_REDIS_HOST: "10.0.0.4"
-  SPRING_DATA_REDIS_PORT: "6380"
-  SPRING_DATA_REDIS_TIMEOUT: "2000ms"
-  IDENTITY_BACKEND_URL: "http://identity-backend:8080"
-  STORAGE_BACKEND_URL: "http://storage-backend:8080"
-  USE_GRPC_STORAGE: "false"
-  STORAGE_GRPC_ADDRESS: "dns:///storage-backend.fitnest-development.svc.cluster.local:9090"
-  JAVA_TOOL_OPTIONS: >-
-    -Xms256m -Xmx512m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled -XX:MaxMetaspaceSize=256m -XX:+AlwaysPreTouch -Xss512k -XX:+ExitOnOutOfMemoryError
+  requests:
+    cpu: 17m
+    memory: 512Mi
+service:
+  port: 80
+  targetPort: 8080
+  type: ClusterIP
+vaultEnv: development

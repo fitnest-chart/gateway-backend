@@ -50,11 +50,5 @@ spec:
               value: "secrets"
             - name: SPRING_CLOUD_VAULT_KV_DEFAULT_CONTEXT
               value: "{{ .Chart.Name }}/{{ .Values.vaultEnv | default "development" }}"
-            {{- if .Values.env }}
-            {{- range $key, $value := .Values.env }}
-            - name: {{ $key }}
-              value: {{ $value | quote }}
-            {{- end }}
-            {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
