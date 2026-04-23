@@ -1,3 +1,4 @@
+vaultEnv: dev
 # values.yaml for gateway-backend
 
 replicaCount: 1
@@ -48,12 +49,10 @@ resources:
     memory: 1024Mi
 env:
   SPRINGDOC_SERVER_URL: "https://dev-api.fitnest.az"
-  JWT_SECRET: "your-jwt-secret-change-in-production"
   JWT_ISSUER: "fitnest"
   SPRING_PROFILES_ACTIVE: "dev"
   SPRING_DATA_REDIS_HOST: "10.0.0.4"
   SPRING_DATA_REDIS_PORT: "6380"
-  SPRING_DATA_REDIS_PASSWORD: "ChangeMeDevRedis!"
   SPRING_DATA_REDIS_TIMEOUT: "2000ms"
   IDENTITY_BACKEND_URL: "http://identity-backend:8080"
   STORAGE_BACKEND_URL: "http://storage-backend:8080"
