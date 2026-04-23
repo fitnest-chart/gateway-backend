@@ -1,4 +1,4 @@
-vaultEnv: dev
+vaultEnv: development
 # values.yaml for gateway-backend
 
 replicaCount: 1
