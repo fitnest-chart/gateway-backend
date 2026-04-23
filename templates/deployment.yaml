@@ -28,8 +28,8 @@ spec:
               containerPort: {{ .Values.service.httpPort | default 8080 }}
               protocol: TCP
           env:
-            - name: VAULT_ADDR
-              value: "http://10.0.0.4:8200"
+            - name: SPRING_CONFIG_IMPORT
+              value: "vault://"
             - name: SPRING_CLOUD_VAULT_ENABLED
               value: "true"
             - name: SPRING_CLOUD_VAULT_URI
