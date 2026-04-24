@@ -6,10 +6,10 @@ hpa:
   minReplicas: '1'
 image:
   imagePullSecrets:
-  - name: ghcr-secret
+    - name: ghcr-secret
   pullPolicy: IfNotPresent
   repository: ghcr.io/fitnest-code/gateway-backend
-  tag: development-05715ca
+  tag: production-05715ca
 ingress:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -22,14 +22,14 @@ ingress:
   className: nginx
   enabled: true
   hosts:
-  - host: dev-api.fitnest.az
-    paths:
-    - path: /
-      pathType: Prefix
+    - host: dev-api.fitnest.az
+      paths:
+        - path: /
+          pathType: Prefix
   tls:
-  - hosts:
-    - dev-api.fitnest.az
-    secretName: fitnest-wildcard-tls
+    - hosts:
+        - dev-api.fitnest.az
+      secretName: fitnest-wildcard-tls
 networkPolicy:
   enabled: true
 replicaCount: 1
