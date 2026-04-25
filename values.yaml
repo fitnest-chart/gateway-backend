@@ -9,7 +9,7 @@ image:
     - name: ghcr-secret
   pullPolicy: IfNotPresent
   repository: ghcr.io/fitnest-code/gateway-backend
-  tag: development-eda7c04
+  tag: development-bd0c3de
 ingress:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -22,13 +22,13 @@ ingress:
   className: nginx
   enabled: true
   hosts:
-    - host: dev-api.fitnest.az
+    - host: api.fitnest.az
       paths:
         - path: /
           pathType: Prefix
   tls:
     - hosts:
-        - dev-api.fitnest.az
+        - api.fitnest.az
       secretName: fitnest-wildcard-tls
 networkPolicy:
   enabled: true
@@ -44,4 +44,4 @@ service:
   port: 80
   targetPort: 8080
   type: ClusterIP
-vaultEnv: development
+vaultEnv: production
