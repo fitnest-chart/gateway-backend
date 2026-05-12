@@ -9,7 +9,7 @@ image:
     - name: ghcr-secret
   pullPolicy: IfNotPresent
   repository: ghcr.io/fitnest-code/gateway-backend
-  tag: development-6dc65e8
+  tag: development-667c1a5
 ingress:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
