@@ -31,7 +31,7 @@ spec:
             - name: SPRING_CONFIG_IMPORT
               value: "vault://"
             - name: SPRING_PROFILES_ACTIVE
-              value: "{{ .Values.vaultEnv | default "development" }}"
+              value: "{{ .Values.vaultEnv | default "production" }}"
             - name: SPRING_CLOUD_VAULT_ENABLED
               value: "true"
             - name: SPRING_CLOUD_VAULT_URI
