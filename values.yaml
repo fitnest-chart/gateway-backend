@@ -9,12 +9,13 @@ image:
     - name: ghcr-secret
   pullPolicy: IfNotPresent
   repository: ghcr.io/fitnest-code/gateway-backend
-  tag: production-73c9d11
+  tag: development-468c22b
 ingress:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
     nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+    nginx.ingress.kubernetes.io/proxy-body-size: '64m'
   backend:
     service:
       name: ''
@@ -22,13 +23,13 @@ ingress:
   className: nginx
   enabled: true
   hosts:
-    - host: api.fitnest.az
+    - host: dev-api.fitnest.az
       paths:
         - path: /
           pathType: Prefix
   tls:
     - hosts:
-        - api.fitnest.az
+        - dev-api.fitnest.az
       secretName: fitnest-wildcard-tls
 networkPolicy:
   enabled: true
