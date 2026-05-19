@@ -23,13 +23,13 @@ ingress:
   className: nginx
   enabled: true
   hosts:
-    - host: dev-api.fitnest.az
+    - host: api.fitnest.az
       paths:
         - path: /
           pathType: Prefix
   tls:
     - hosts:
-        - dev-api.fitnest.az
+        - api.fitnest.az
       secretName: fitnest-wildcard-tls
 networkPolicy:
   enabled: true
