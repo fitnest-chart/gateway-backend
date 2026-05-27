@@ -35,12 +35,12 @@ networkPolicy:
   enabled: true
 replicaCount: 1
 resources:
+  requests:
+    cpu: 100m
+    memory: 512Mi
   limits:
     cpu: 1000m
     memory: 1024Mi
-  requests:
-    cpu: 17m
-    memory: 512Mi
 service:
   port: 80
   targetPort: 8080
