@@ -15,6 +15,17 @@ spec:
         {{- include "app.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "app.fullname" . }}
+      # Kubernetes defaults to ndots:5, so Netty's async DNS resolver tries
+      # vault.fitnest.az.<search-domain> first and fails without falling back to the
+      # absolute name. This service is the only reactive/WebFlux app, so it is the only
+      # one using that resolver -- the servlet services resolve the name fine via the
+      # JVM's blocking resolver. ndots:1 makes dotted names resolve as absolute first.
+      # Bare in-cluster service names (0 dots, e.g. catalog-backend) still use the
+      # search domains as before.
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
       {{- with .Values.image.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
