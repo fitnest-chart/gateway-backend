@@ -73,3 +73,28 @@ spec:
               value: "500"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+
+          # Probe paths verified live against this service before rollout.
+          # The JVM needs time to boot; the startup probe holds the other two off so a
+          # slow start is not mistaken for a crash loop.
+          startupProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: http
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 30
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: http
+            periodSeconds: 20
+            timeoutSeconds: 3
+            failureThreshold: 3
