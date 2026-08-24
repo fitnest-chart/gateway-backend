@@ -12,7 +12,6 @@ image:
   tag: production-9ce9384
 ingress:
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
     nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
     nginx.ingress.kubernetes.io/proxy-body-size: '64m'
@@ -30,7 +29,7 @@ ingress:
   tls:
     - hosts:
         - api.fitnest.az
-      secretName: fitnest-origin-tls
+      secretName: fitnest-wildcard-tls
 networkPolicy:
   enabled: true
 replicaCount: 1
