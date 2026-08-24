@@ -29,7 +29,7 @@ ingress:
   tls:
     - hosts:
         - api.fitnest.az
-      secretName: fitnest-wildcard-tls
+      secretName: fitnest-tls
 networkPolicy:
   enabled: true
 replicaCount: 1
