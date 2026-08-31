@@ -46,7 +46,7 @@ spec:
             - name: SPRING_CLOUD_VAULT_ENABLED
               value: "true"
             - name: SPRING_CLOUD_VAULT_URI
-              value: "http://vault.fitnest.az"
+              value: "http://10.30.16.50:8200"
             - name: SPRING_CLOUD_VAULT_AUTHENTICATION
               value: "APPROLE"
             - name: SPRING_CLOUD_VAULT_APP_ROLE_ROLE_ID
