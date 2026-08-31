@@ -22,13 +22,13 @@ ingress:
   className: nginx
   enabled: true
   hosts:
-    - host: api.fitnest.az
+    - host: dev-api.fitnest.az
       paths:
         - path: /
           pathType: Prefix
   tls:
     - hosts:
-        - api.fitnest.az
+        - dev-api.fitnest.az
       secretName: fitnest-tls
 networkPolicy:
   enabled: true
@@ -44,4 +44,4 @@ service:
   port: 80
   targetPort: 8080
   type: ClusterIP
-vaultEnv: production
+vaultEnv: development
