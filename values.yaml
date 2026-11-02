@@ -9,7 +9,7 @@ image:
     - name: ghcr-secret
   pullPolicy: IfNotPresent
   repository: ghcr.io/fitnest-code/gateway-backend
-  tag: development-d8bcd0e
+  tag: development-ff1e518
 ingress:
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
