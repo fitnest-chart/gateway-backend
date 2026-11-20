@@ -71,6 +71,13 @@ spec:
               value: "1000MB"
             - name: SERVER_TOMCAT_MAX_PART_COUNT
               value: "500"
+            # Landing host key: skip GET rate-limit when X-FitNest-Landing-Key matches.
+            # Sourced from k8s secret (HashiCorp AppRole is read-only in prod).
+            - name: LANDING_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: landing-api-key
+                  key: LANDING_API_KEY
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
 
